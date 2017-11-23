@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
-namespace Dapper.Upsert.Tests
+namespace LaughingWaffle.Tests
 {
-    [TestClass]
+    
     public class SqlGeneratorTests
     {
         [Table("TestNullAndNotNullInts")]
@@ -14,7 +14,7 @@ namespace Dapper.Upsert.Tests
             public int? FK { get; set; }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestNullAndNotNullInts()
         {
             // arrange
@@ -27,7 +27,7 @@ namespace Dapper.Upsert.Tests
             var actual = instance.CreateTable<TestNullAndNotNullInt>();
 
             // assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         [Table("EachTypeWeHave")]
@@ -41,7 +41,7 @@ namespace Dapper.Upsert.Tests
             public DateTime? NullableDt { get; set; }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestEveryType()
         {
             // arrange
@@ -57,7 +57,7 @@ namespace Dapper.Upsert.Tests
             var actual = instance.CreateTable<EachTypeWeHave>();
 
             // assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
     }
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaughingWaffle", "LaughingWaffle\LaughingWaffle.csproj", "{30902B0B-D632-41DE-931A-160411CC299C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaughingWaffle", "src\LaughingWaffle\LaughingWaffle.csproj", "{30902B0B-D632-41DE-931A-160411CC299C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaughingWaffle.Tests", "LaughingWaffle.Tests\LaughingWaffle.Tests.csproj", "{B67E496F-851B-47ED-BF96-523C01F14FFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaffleTests", "tests\WaffleTests\WaffleTests.csproj", "{E6BB440E-2901-4B0B-BF31-2043A645B264}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{30902B0B-D632-41DE-931A-160411CC299C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30902B0B-D632-41DE-931A-160411CC299C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30902B0B-D632-41DE-931A-160411CC299C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B67E496F-851B-47ED-BF96-523C01F14FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B67E496F-851B-47ED-BF96-523C01F14FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B67E496F-851B-47ED-BF96-523C01F14FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B67E496F-851B-47ED-BF96-523C01F14FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6BB440E-2901-4B0B-BF31-2043A645B264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6BB440E-2901-4B0B-BF31-2043A645B264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6BB440E-2901-4B0B-BF31-2043A645B264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6BB440E-2901-4B0B-BF31-2043A645B264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

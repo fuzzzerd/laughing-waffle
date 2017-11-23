@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace Dapper.Upsert
+namespace LaughingWaffle
 {
     public class SqlGenerator
     {
@@ -13,7 +13,7 @@ namespace Dapper.Upsert
 
         public string CreateTable<TType>()
         {
-            var builder = new System.Text.StringBuilder();
+            var builder = new StringBuilder();
 
             var entityType = typeof(TType);
             var entityTypeInfo = entityType.GetTypeInfo();
