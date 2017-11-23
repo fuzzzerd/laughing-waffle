@@ -12,7 +12,6 @@ namespace LaughingWaffle
     /// </summary>
     public abstract class GeneratorBase : ISqlGenerator
     {
-
         public string CreateTable<TType>()
         {
             return CreateTable<TType>(true);
