@@ -5,7 +5,7 @@ using Xunit;
 namespace LaughingWaffle.Tests
 {
     
-    public class SqlGeneratorTests
+    public class SqlGeneratorNonTempTableTests
     {
         [Table("TestNullAndNotNullInts")]
         public class TestNullAndNotNullInt
