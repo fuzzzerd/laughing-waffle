@@ -24,7 +24,7 @@ namespace LaughingWaffle.Tests
 [FK] [int] NULL
 )";
             // act
-            var actual = instance.CreateTable<TestNullAndNotNullInt>();
+            var actual = instance.CreateTable<TestNullAndNotNullInt>(false);
 
             // assert
             Assert.Equal(expected, actual);
@@ -79,7 +79,7 @@ namespace LaughingWaffle.Tests
 [offset] [datetimeoffset] NOT NULL
 )";
             // act
-            var actual = instance.CreateTable<EachTypeWeHave>();
+            var actual = instance.CreateTable<EachTypeWeHave>(false);
 
             // assert
             Assert.Equal(expected, actual);
