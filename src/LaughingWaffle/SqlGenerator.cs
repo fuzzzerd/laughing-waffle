@@ -56,18 +56,16 @@ namespace LaughingWaffle
         /// </summary>
         private Dictionary<string, string> CsharpToTsql => new Dictionary<string, string> {
             { "Guid", "uniqueidentifer" },
-            { "int", "int" },
             { "Int32", "int" },
-            { "byte", "tinyint" },
-            { "long", "bigint" },
+            { "Byte", "tinyint" },
+            { "Byte[]", "binary" },
             { "Int64", "bigint" },
             { "String", "nvarchar(max)" },
-            { "bool", "bit" },
-            { "byte[]", "binary" },
+            { "Boolean", "bit" },            
             { "DateTime", "datetime" },
             { "DateTimeOffset", "datetimeoffset" },
-            { "float", "float" },
-            { "decimal", "decimal" },
+            { "Single", "float" },
+            { "Decimal", "decimal" },
             { "TimeSpan", "time" },
             { "Double", "real" }
         };
