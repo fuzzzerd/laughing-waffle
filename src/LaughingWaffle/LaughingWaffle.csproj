@@ -5,7 +5,14 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Bulk Data Tools for SQL Server Databases.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/fuzzzerd/laughing-waffle/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://fuzzzerd.github.io/laughing-waffle/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/fuzzzerd/laughing-waffle</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <Authors>fuzzzerd</Authors>
+    <Company />
   </PropertyGroup>
 
   <ItemGroup>
