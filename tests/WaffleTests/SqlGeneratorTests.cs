@@ -14,7 +14,7 @@ namespace LaughingWaffle.Tests
             public int? FK { get; set; }
         }
 
-        [Fact]
+        [Fact(DisplayName ="Test Null and Not Null Ints")]
         public void TestNullAndNotNullInts()
         {
             // arrange
@@ -41,7 +41,7 @@ namespace LaughingWaffle.Tests
             public DateTime? NullableDt { get; set; }
         }
 
-        [Fact]
+        [Fact(DisplayName = "Test All The Type Mappings")]
         public void TestEveryType()
         {
             // arrange
