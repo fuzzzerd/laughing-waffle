@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Bulk Data Tools for SQL Server Databases.</Description>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
