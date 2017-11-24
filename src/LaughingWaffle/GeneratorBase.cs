@@ -12,11 +12,17 @@ namespace LaughingWaffle
     /// </summary>
     public abstract class GeneratorBase : ISqlGenerator
     {
+        /// <summary>
+        /// <see cref="ISqlGenerator.CreateTable{TType}"/>
+        /// </summary>
         public string CreateTable<TType>()
         {
             return CreateTable<TType>(true);
         }
 
+        /// <summary>
+        /// <see cref="ISqlGenerator.CreateTable{TType}(bool)"/>
+        /// </summary>
         public string CreateTable<TType>(bool tempTable)
         {
             var builder = new StringBuilder();
