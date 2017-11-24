@@ -1,6 +1,6 @@
 ﻿namespace LaughingWaffle
 {
-    interface ISqlGenerator
+    public interface ISqlGenerator
     {
         /// <summary>
         /// Given a class type, generate the Create Sql Statement for it. 
