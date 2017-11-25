@@ -3,9 +3,13 @@
     public interface ISqlGenerator
     {
         /// <summary>
-        /// Expose the name of the underlying [TableAttribute] on the class.
+        /// Expose the table name of the underlying [TableAttribute] on the class.
         /// </summary>
         string TableName { get; }
+        /// <summary>
+        /// Expose the table schema of the underlying [TableAttribute] on the class.
+        /// </summary>
+        string TableSchema { get; }
 
 
         /// <summary>
