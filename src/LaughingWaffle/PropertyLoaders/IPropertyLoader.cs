@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace LaughingWaffle.SqlGeneration
+namespace LaughingWaffle.PropertyLoaders
 {
     /// <summary>
     /// Define the contract of the property loader

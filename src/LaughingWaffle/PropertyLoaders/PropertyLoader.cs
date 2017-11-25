@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 
-namespace LaughingWaffle.SqlGeneration
+namespace LaughingWaffle.PropertyLoaders
 {
     public class PropertyLoader : IPropertyLoader
     {
