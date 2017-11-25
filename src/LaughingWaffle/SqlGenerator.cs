@@ -2,10 +2,7 @@
 
 namespace LaughingWaffle
 {
-    public class SqlGenerator : GeneratorBase
+    public class SqlGenerator<TType> : GeneratorBase<TType>
     {
-        public SqlGenerator() { }
-
-        
     }
 }

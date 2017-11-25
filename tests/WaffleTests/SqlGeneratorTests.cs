@@ -18,6 +18,7 @@ namespace LaughingWaffle.Tests
         public int PK { get; set; }
         public int? FK { get; set; }
     }
+
     [Table("EachTypeWeHave")]
     public class EachTypeWeHave
     {
@@ -48,14 +49,14 @@ namespace LaughingWaffle.Tests
         public void TestNonTempTableGeneration()
         {
             // arrange
-            var instance = new SqlGenerator();
+            var instance = new SqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE StandardModels (
 [PK] [int] NOT NULL
 [FK] [int] NULL
 [Name] [nvarchar(max)] NOT NULL
 )";
             // act
-            var actual = instance.CreateTable<StandardModel>(false);
+            var actual = instance.CreateTable(false);
 
             // assert
             Assert.Equal(expected, actual);
@@ -65,14 +66,14 @@ namespace LaughingWaffle.Tests
         public void TestTempTableGeneration()
         {
             // arrange
-            var instance = new SqlGenerator();
+            var instance = new SqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE #StandardModels (
 [PK] [int] NOT NULL
 [FK] [int] NULL
 [Name] [nvarchar(max)] NOT NULL
 )";
             // act
-            var actual = instance.CreateTable<StandardModel>();
+            var actual = instance.CreateTable();
 
             // assert
             Assert.Equal(expected, actual);
@@ -82,14 +83,14 @@ namespace LaughingWaffle.Tests
         public void TestTempTableGenerationExplicit()
         {
             // arrange
-            var instance = new SqlGenerator();
+            var instance = new SqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE #StandardModels (
 [PK] [int] NOT NULL
 [FK] [int] NULL
 [Name] [nvarchar(max)] NOT NULL
 )";
             // act
-            var actual = instance.CreateTable<StandardModel>(true);
+            var actual = instance.CreateTable(true);
 
             // assert
             Assert.Equal(expected, actual);
@@ -99,25 +100,23 @@ namespace LaughingWaffle.Tests
         public void TestNullAndNotNullInts()
         {
             // arrange
-            var instance = new SqlGenerator();
+            var instance = new SqlGenerator<TestNullAndNotNullInt>();
             var expected = $@"CREATE TABLE TestNullAndNotNullInts (
 [PK] [int] NOT NULL
 [FK] [int] NULL
 )";
             // act
-            var actual = instance.CreateTable<TestNullAndNotNullInt>(false);
+            var actual = instance.CreateTable(false);
 
             // assert
             Assert.Equal(expected, actual);
         }
 
-        
-
         [Fact(DisplayName = "Test All The Type Mappings")]
         public void TestEveryType()
         {
             // arrange
-            var instance = new SqlGenerator();
+            var instance = new SqlGenerator<EachTypeWeHave>();
             var expected = $@"CREATE TABLE EachTypeWeHave (
 [PK] [int] NOT NULL
 [FK] [int] NULL
@@ -138,7 +137,7 @@ namespace LaughingWaffle.Tests
 [offset] [datetimeoffset] NOT NULL
 )";
             // act
-            var actual = instance.CreateTable<EachTypeWeHave>(false);
+            var actual = instance.CreateTable(false);
 
             // assert
             Assert.Equal(expected, actual);

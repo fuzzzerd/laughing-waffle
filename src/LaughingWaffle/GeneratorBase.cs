@@ -10,34 +10,64 @@ namespace LaughingWaffle
     /// <summary>
     /// Base class for Sql Generators to inherit from (at the moment this is SQL Server only, but who knows where it might go)
     /// </summary>
-    public abstract class GeneratorBase : ISqlGenerator
+    /// <typeparam name="TType">The type to reflect upon and generate corresponding SQL statements.</typeparam>>
+    public abstract class GeneratorBase<TType> : ISqlGenerator
     {
+        private readonly Type tType;
+        private readonly TypeInfo tTypeInfo;
+
+
         /// <summary>
-        /// <see cref="ISqlGenerator.CreateTable{TType}"/>
+        /// Name of the table that will be used for data storage.
         /// </summary>
-        public string CreateTable<TType>()
+        public string TableName
         {
-            return CreateTable<TType>(true);
+            get
+            {
+                var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
+
+                var tableName = tableAttribute != null ? tableAttribute.Name : tTypeInfo.Name;
+                var tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
+
+                return tableName;
+            }
+        }
+        
+        /// <summary>
+        /// Base Class Constructor; load up the requisite paramaters. 
+        /// </summary>
+        public GeneratorBase() 
+        {
+            tType = typeof(TType);
+            tTypeInfo = tType.GetTypeInfo();
         }
 
         /// <summary>
-        /// <see cref="ISqlGenerator.CreateTable{TType}(bool)"/>
+        /// Given a class type, generate the Create Sql Statement for it.
         /// </summary>
-        public string CreateTable<TType>(bool tempTable)
+        /// <remarks></remarks>
+        /// <returns>The DDL statements for the table based on the input paramaters.</returns>
+        public virtual string CreateTable()
+        {
+            return CreateTable(true);
+        }
+
+        /// <summary>
+        /// Given a class type, generate the Create Sql Statement for it.
+        /// See also: <seealso cref="ISqlGenerator.CreateTable{TType}(bool)"/>
+        /// </summary>
+        /// <param name="tempTable">Boolean indicating if this table should be a #TempTable or a real table.</param>
+        /// <returns>The DDL statements for the table based on the input paramaters.</returns>
+        public virtual string CreateTable(bool tempTable)
         {
             var builder = new StringBuilder();
 
-            var entityType = typeof(TType);
-            var entityTypeInfo = entityType.GetTypeInfo();
+            var allProperties = tType.GetProperties()
+                .Where(q => q.CanWrite) // read and write props
+                //.Where(x => !x.GetAccessors()[0].IsVirtual) // non-virtual props
+                ;
 
-            var tableAttribute = entityTypeInfo.GetCustomAttribute<TableAttribute>();
-
-            var tableName = tableAttribute != null ? tableAttribute.Name : entityTypeInfo.Name;
-            var tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
-
-            var allProperties = entityType.GetProperties().Where(q => q.CanWrite);
-
-            builder.AppendLine($@"CREATE TABLE {(tempTable ? "#": "")}{tableName} (");
+            builder.AppendLine($@"CREATE TABLE {(tempTable ? "#" : "")}{TableName} (");
 
             foreach (var prop in allProperties)
             {
@@ -52,6 +82,8 @@ namespace LaughingWaffle
 
             return builder.ToString();
         }
+
+        //public virtual string GetTableName => 
 
         /// <summary>
         /// Reference: https://stackoverflow.com/a/5873231/86860

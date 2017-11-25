@@ -3,19 +3,18 @@
     public interface ISqlGenerator
     {
         /// <summary>
-        /// Given a class type, generate the Create Sql Statement for it. 
-        /// Default Behavior is to create a #TempTable. Same as calling CreateTable<T>(true);
+        /// Generate (and return) the DDL statement for an arbitrary type.
         /// </summary>
-        /// <param name="tempTable">Boolean indicating if this table should be a #TempTable or a real table.</param>
         /// <returns>The DDL statements for the table based on the input paramaters.</returns>
-        string CreateTable<TType>();
+        string CreateTable();
 
         /// <summary>
-        /// Given a class type, generate the Create Sql Statement for it.
+        /// Generate (and return) the DDL statement for an arbitrary type.
         /// </summary>
-        /// <typeparam name="TType">The type to reflect against and pull public properties for table fields.</typeparam>
-        /// <param name="tempTable">Boolean indicating if this table should be a #TempTable or a real table.</param>
+        /// <param name="tempTable">Boolean to indicate if the table should be in the 'temporary' form or not. (Table or #Table).</param>
         /// <returns>The DDL statements for the table based on the input paramaters.</returns>
-        string CreateTable<TType>(bool tempTable);
+        string CreateTable(bool tempTable);
+
+        string TableName { get; }
     }
 }
