@@ -19,7 +19,7 @@ namespace LaughingWaffle.SqlGeneration
         private readonly IPropertyLoader _propertyFilter;
 
         /// <summary>
-        /// Name of the table that will be used for data storage.
+        /// Expose the table name of the underlying [TableAttribute] on the class.
         /// </summary>
         public string TableName
         {
@@ -28,14 +28,30 @@ namespace LaughingWaffle.SqlGeneration
                 if (string.IsNullOrEmpty(_tableName))
                 {
                     var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
-
-                    var _tableName = tableAttribute != null ? tableAttribute.Name : tTypeInfo.Name;
-                    var tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
+                    _tableName = tableAttribute != null ? tableAttribute.Name : tTypeInfo.Name;
                 }
                 return _tableName;
             }
         }
         private string _tableName;
+
+        /// <summary>
+        /// Expose the table schema of the underlying [TableAttribute] on the class.
+        /// </summary>
+        public string TableSchema
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_tableName))
+                {
+                    var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
+                    _tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
+                }
+                return _tableName;
+
+            }
+        }
+        private string _tableSchema;
 
         /// <summary>
         /// Base Class Constructor; load up the requisite paramaters. 
