@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LaughingWaffle.SqlGeneration;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Xunit;
 
@@ -49,7 +50,7 @@ namespace LaughingWaffle.Tests
         public void TestNonTempTableGeneration()
         {
             // arrange
-            var instance = new SqlGenerator<StandardModel>();
+            var instance = new TSqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE StandardModels (
 [PK] [int] NOT NULL
 [FK] [int] NULL
@@ -66,7 +67,7 @@ namespace LaughingWaffle.Tests
         public void TestTempTableGeneration()
         {
             // arrange
-            var instance = new SqlGenerator<StandardModel>();
+            var instance = new TSqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE #StandardModels (
 [PK] [int] NOT NULL
 [FK] [int] NULL
@@ -83,7 +84,7 @@ namespace LaughingWaffle.Tests
         public void TestTempTableGenerationExplicit()
         {
             // arrange
-            var instance = new SqlGenerator<StandardModel>();
+            var instance = new TSqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE #StandardModels (
 [PK] [int] NOT NULL
 [FK] [int] NULL
@@ -100,7 +101,7 @@ namespace LaughingWaffle.Tests
         public void TestNullAndNotNullInts()
         {
             // arrange
-            var instance = new SqlGenerator<TestNullAndNotNullInt>();
+            var instance = new TSqlGenerator<TestNullAndNotNullInt>();
             var expected = $@"CREATE TABLE TestNullAndNotNullInts (
 [PK] [int] NOT NULL
 [FK] [int] NULL
@@ -116,7 +117,7 @@ namespace LaughingWaffle.Tests
         public void TestEveryType()
         {
             // arrange
-            var instance = new SqlGenerator<EachTypeWeHave>();
+            var instance = new TSqlGenerator<EachTypeWeHave>();
             var expected = $@"CREATE TABLE EachTypeWeHave (
 [PK] [int] NOT NULL
 [FK] [int] NULL

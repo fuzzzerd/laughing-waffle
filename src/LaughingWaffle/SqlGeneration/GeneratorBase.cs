@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace LaughingWaffle
+namespace LaughingWaffle.SqlGeneration
 {
     /// <summary>
     /// Base class for Sql Generators to inherit from (at the moment this is SQL Server only, but who knows where it might go)

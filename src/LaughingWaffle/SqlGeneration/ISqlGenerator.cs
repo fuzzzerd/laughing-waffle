@@ -1,4 +1,4 @@
-﻿namespace LaughingWaffle
+﻿namespace LaughingWaffle.SqlGeneration
 {
     public interface ISqlGenerator
     {
