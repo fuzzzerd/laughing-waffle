@@ -3,6 +3,12 @@
     public interface ISqlGenerator
     {
         /// <summary>
+        /// Expose the name of the underlying [TableAttribute] on the class.
+        /// </summary>
+        string TableName { get; }
+
+
+        /// <summary>
         /// Generate (and return) the DDL statement for an arbitrary type.
         /// </summary>
         /// <returns>The DDL statements for the table based on the input paramaters.</returns>
@@ -15,6 +21,5 @@
         /// <returns>The DDL statements for the table based on the input paramaters.</returns>
         string CreateTable(bool tempTable);
 
-        string TableName { get; }
     }
 }

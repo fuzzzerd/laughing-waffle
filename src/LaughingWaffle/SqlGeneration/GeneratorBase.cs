@@ -15,7 +15,7 @@ namespace LaughingWaffle.SqlGeneration
     {
         private readonly Type tType;
         private readonly TypeInfo tTypeInfo;
-
+        private readonly IPropertyLoader _propertyFilter;
 
         /// <summary>
         /// Name of the table that will be used for data storage.
@@ -32,14 +32,22 @@ namespace LaughingWaffle.SqlGeneration
                 return tableName;
             }
         }
-        
+
         /// <summary>
         /// Base Class Constructor; load up the requisite paramaters. 
         /// </summary>
-        public GeneratorBase() 
+        public GeneratorBase() : this(new PropertyLoader()) { }
+
+        /// <summary>
+        /// Base Class Constructor; load up the requisite paramaters. 
+        /// </summary>
+        /// <param name="propertyFilter">Inject an instance of a custom IPropertyLoader. Useful if you need to filter the list of properties on your types.</param>
+        public GeneratorBase(IPropertyLoader propertyFilter) 
         {
             tType = typeof(TType);
             tTypeInfo = tType.GetTypeInfo();
+
+            _propertyFilter = propertyFilter;
         }
 
         /// <summary>
@@ -62,10 +70,7 @@ namespace LaughingWaffle.SqlGeneration
         {
             var builder = new StringBuilder();
 
-            var allProperties = tType.GetProperties()
-                .Where(q => q.CanWrite) // read and write props
-                //.Where(x => !x.GetAccessors()[0].IsVirtual) // non-virtual props
-                ;
+            var allProperties = _propertyFilter.GetProperties(tType);
 
             builder.AppendLine($@"CREATE TABLE {(tempTable ? "#" : "")}{TableName} (");
 
