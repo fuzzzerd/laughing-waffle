@@ -25,14 +25,17 @@ namespace LaughingWaffle.SqlGeneration
         {
             get
             {
-                var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
+                if (string.IsNullOrEmpty(_tableName))
+                {
+                    var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
 
-                var tableName = tableAttribute != null ? tableAttribute.Name : tTypeInfo.Name;
-                var tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
-
-                return tableName;
+                    var _tableName = tableAttribute != null ? tableAttribute.Name : tTypeInfo.Name;
+                    var tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
+                }
+                return _tableName;
             }
         }
+        private string _tableName;
 
         /// <summary>
         /// Base Class Constructor; load up the requisite paramaters. 
