@@ -5,7 +5,7 @@ using Xunit;
 
 namespace LaughingWaffle.Tests
 {
-    [Table("StandardModels")]
+    [Table("StandardModels", Schema = "dbo")]
     public class StandardModel
     {
         public int PK { get; set; }
@@ -46,6 +46,34 @@ namespace LaughingWaffle.Tests
 
     public class SqlGeneratorTests
     {
+        [Fact(DisplayName = "Table Name Should Match Attribute")]
+        public void TableNameShouldMatch()
+        {
+            // arrange
+            var instance = new TSqlGenerator<StandardModel>();
+            var expected = $@"StandardModels";
+
+            // act
+            var actual = instance.TableName;
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact(DisplayName = "Table Schema Should Match Attribute")]
+        public void TableSchemaShouldMatchAttributeSchema()
+        {
+            // arrange
+            var instance = new TSqlGenerator<StandardModel>();
+            var expected = $@"dbo";
+
+            // act
+            var actual = instance.TableSchema;
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
+
         [Fact(DisplayName = "Test Non Temp Table")]
         public void TestNonTempTableGeneration()
         {

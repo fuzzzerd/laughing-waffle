@@ -42,12 +42,12 @@ namespace LaughingWaffle.SqlGeneration
         {
             get
             {
-                if (string.IsNullOrEmpty(_tableName))
+                if (string.IsNullOrEmpty(_tableSchema))
                 {
                     var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
                     _tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
                 }
-                return _tableName;
+                return _tableSchema;
 
             }
         }
