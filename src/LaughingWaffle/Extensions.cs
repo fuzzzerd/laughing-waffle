@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
-using Dapper;
 using System.Data.SqlClient;
 
 namespace LaughingWaffle
@@ -19,7 +18,10 @@ namespace LaughingWaffle
             var createScript = sqlGenerator.CreateTable();
 
             // execute
-            conn.Execute(createScript); // create temp table
+            var createTableCmd = conn.CreateCommand();
+            createTableCmd.CommandType = CommandType.Text;
+            createTableCmd.CommandText = createScript;
+            createTableCmd.ExecuteNonQuery();
 
             // ==> bulk insert to temp table
             using (var copy = new SqlBulkCopy((SqlConnection)conn))
@@ -30,9 +32,15 @@ namespace LaughingWaffle
             }
             // <== end bulk insert to temp table
 
-            // ==> merge temp table to target table
-            // TODO: implement
-            // <== end merge temp table to target table
+            using (var trans = conn.BeginTransaction())
+            {
+                // ==> merge temp table to target table
+                //var mergeTempAndRealCmd = conn.CreateCommand();
+                //mergeTempAndRealCmd.CommandType = CommandType.Text;
+                //mergeTempAndRealCmd.CommandText = mergeTempAndRealCmd;
+                //mergeTempAndRealCmd.ExecuteNonQuery();
+                // <== end merge temp table to target table
+            }
 
             // cleanup
 
