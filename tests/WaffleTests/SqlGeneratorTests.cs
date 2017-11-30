@@ -1,49 +1,9 @@
 ﻿using LaughingWaffle.SqlGeneration;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using WaffleTests.TestModels;
 using Xunit;
 
 namespace LaughingWaffle.Tests
 {
-    [Table("StandardModels", Schema = "dbo")]
-    public class StandardModel
-    {
-        public int PK { get; set; }
-        public int? FK { get; set; }
-        public String Name { get; set; }
-    }
-
-    [Table("TestNullAndNotNullInts")]
-    public class TestNullAndNotNullInt
-    {
-        public int PK { get; set; }
-        public int? FK { get; set; }
-    }
-
-    [Table("EachTypeWeHave")]
-    public class EachTypeWeHave
-    {
-        public int PK { get; set; }
-        public int? FK { get; set; }
-
-        public string Name { get; set; }
-        public DateTime Dt { get; set; }
-        public DateTime? NullableDt { get; set; }
-        public double d { get; set; }
-        public double? dNull { get; set; }
-        public long longNumber { get; set; }
-        public Int64 i64Number { get; set; }
-        public float er { get; set; }
-        public decimal dec { get; set; }
-        public bool theBIT { get; set; }
-        public Boolean theBOOLEAN { get; set; }
-        public Byte chewer { get; set; }
-        public byte bigChewer { get; set; }
-
-        public byte[] binary { get; set; }
-        public DateTimeOffset offset { get; set; }
-    }
-
     public class SqlGeneratorTests
     {
         [Fact(DisplayName = "Table Name Should Match Attribute")]
