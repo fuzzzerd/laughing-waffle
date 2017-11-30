@@ -7,6 +7,7 @@ namespace LaughingWaffle.PropertyLoaders
 {
     public class PropertyLoader : IPropertyLoader
     {
+        //TODO: look into including all value types + strings. That should be close to what we need.
         /// <summary>
         /// Default Property Load/Filter. Pulls all properties that have .CanWrite.
         /// </summary>
