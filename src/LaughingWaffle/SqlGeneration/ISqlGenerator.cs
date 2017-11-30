@@ -1,4 +1,6 @@
-﻿namespace LaughingWaffle.SqlGeneration
+﻿using System.Collections.Generic;
+
+namespace LaughingWaffle.SqlGeneration
 {
     public interface ISqlGenerator
     {
@@ -10,7 +12,6 @@
         /// Expose the table schema of the underlying [TableAttribute] on the class.
         /// </summary>
         string TableSchema { get; }
-
 
         /// <summary>
         /// Generate (and return) the DDL statement for an arbitrary type.
@@ -25,5 +26,10 @@
         /// <returns>The DDL statements for the table based on the input paramaters.</returns>
         string CreateTable(bool tempTable);
 
+        /// <summary>
+        /// Get the properties for this instance type.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> GetProperties();
     }
 }

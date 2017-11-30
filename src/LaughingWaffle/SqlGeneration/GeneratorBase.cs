@@ -108,7 +108,13 @@ namespace LaughingWaffle.SqlGeneration
             return builder.ToString();
         }
 
-        //public virtual string GetTableName => 
+        /// <summary>
+        /// Utilizing the injected <see cref="IPropertyLoader" /> enumerate the matching properties and return their names.
+        /// </summary>
+        /// <returns>
+        /// Gets the names of all properties utilizing the provided <see cref="IPropertyLoader"/> instance.
+        /// </returns>
+        public IEnumerable<string> GetProperties() => _propertyFilter.GetProperties(tType).Select(p => p.Name);
 
         /// <summary>
         /// Reference: https://stackoverflow.com/a/5873231/86860
