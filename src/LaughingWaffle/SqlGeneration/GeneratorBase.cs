@@ -98,7 +98,7 @@ namespace LaughingWaffle.SqlGeneration
             {
                 var name = prop.Name;
                 var csharpType = GetCoreType(prop.PropertyType).Name;
-                var tsqlType = CsharpToTsql[csharpType];
+                var tsqlType = CsharpTypeToSqlType[csharpType];
                 var nulle = Nullable.GetUnderlyingType(prop.PropertyType) != null ? "NULL" : "NOT NULL";
                 builder.AppendLine($"[{name}] [{tsqlType}] {nulle}");
             }
@@ -117,24 +117,10 @@ namespace LaughingWaffle.SqlGeneration
         public IEnumerable<string> GetProperties() => _propertyFilter.GetProperties(tType).Select(p => p.Name);
 
         /// <summary>
-        /// Reference: https://stackoverflow.com/a/5873231/86860
-        /// Reversed from the link
+        /// 
         /// </summary>
-        protected virtual Dictionary<string, string> CsharpToTsql => new Dictionary<string, string> {
-            { "Guid", "uniqueidentifer" },
-            { "Int32", "int" },
-            { "Byte", "tinyint" },
-            { "Byte[]", "binary" },
-            { "Int64", "bigint" },
-            { "String", "nvarchar(max)" },
-            { "Boolean", "bit" },
-            { "DateTime", "datetime" },
-            { "DateTimeOffset", "datetimeoffset" },
-            { "Single", "float" },
-            { "Decimal", "decimal" },
-            { "TimeSpan", "time" },
-            { "Double", "real" }
-        };
+        /// <returns>A mapping dictionary between C# types and their Sql Counterparts</returns>
+        protected abstract Dictionary<string, string> CsharpTypeToSqlType { get; }
 
         private static Type GetCoreType(Type type)
         {
