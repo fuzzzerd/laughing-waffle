@@ -2,16 +2,12 @@
 
 namespace LaughingWaffle.SqlGeneration
 {
-    public interface ISqlGenerator
+    public interface ISqlGenerator<TType>
     {
         /// <summary>
         /// Expose the table name of the underlying [TableAttribute] on the class.
         /// </summary>
-        string TableName { get; }
-        /// <summary>
-        /// Expose the table schema of the underlying [TableAttribute] on the class.
-        /// </summary>
-        string TableSchema { get; }
+        string TableName(bool tempTable);
 
         /// <summary>
         /// Generate (and return) the DDL statement for an arbitrary type.
@@ -31,5 +27,7 @@ namespace LaughingWaffle.SqlGeneration
         /// </summary>
         /// <returns></returns>
         IEnumerable<string> GetProperties();
+
+        string Merge(IUpsertOptions<TType> options);
     }
 }

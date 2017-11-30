@@ -14,7 +14,7 @@ namespace LaughingWaffle
             IEnumerable<TEntity> entities)
         {
             // setup 
-            ISqlGenerator sqlGenerator = new TSqlGenerator<TEntity>();
+            var sqlGenerator = new TSqlGenerator<TEntity>();
             var createScript = sqlGenerator.CreateTable();
 
             // execute

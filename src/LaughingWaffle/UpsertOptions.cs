@@ -7,10 +7,29 @@ using System.Runtime.CompilerServices;
 
 namespace LaughingWaffle
 {
-    public class UpsertOptions<TType>
+    public class UpsertOptions<TType> : IUpsertOptions<TType>
     {
         internal List<string> _mapColumns;
         internal List<string> _matchColumns;
+
+        public IEnumerable<string> MatchColumns => _matchColumns;
+        public IEnumerable<string> MapColumns => _mapColumns;
+
+        public UpsertOptions<TType> SetTargetTable(string table)
+        {
+            return SetTargetTableWithSchema("dbo", table);
+        }
+
+        public UpsertOptions<TType> SetTargetTableWithSchema(string schema, string table)
+        {
+            TargetTableName = table;
+            TargetTableSchema = schema;
+            return this;
+        }
+
+        public string TargetTableName { get; private set; }
+
+        public string TargetTableSchema { get; private set; }
 
         public UpsertOptions()
         {
@@ -55,5 +74,7 @@ namespace LaughingWaffle
 
             return body.Member.Name;
         }
+
+        
     }
 }

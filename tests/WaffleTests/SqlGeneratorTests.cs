@@ -14,21 +14,21 @@ namespace LaughingWaffle.Tests
             var expected = $@"StandardModels";
 
             // act
-            var actual = instance.TableName;
+            var actual = instance.TableName(false);
 
             // assert
             Assert.Equal(expected, actual);
         }
 
-        [Fact(DisplayName = "Table Schema Should Match Attribute")]
-        public void TableSchemaShouldMatchAttributeSchema()
+        [Fact(DisplayName = "Temp Table Name Should Match")]
+        public void TempTableShouldMatch()
         {
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
-            var expected = $@"dbo";
+            var expected = $@"#StandardModels";
 
             // act
-            var actual = instance.TableSchema;
+            var actual = instance.TableName(true);
 
             // assert
             Assert.Equal(expected, actual);
@@ -127,6 +127,89 @@ namespace LaughingWaffle.Tests
 )";
             // act
             var actual = instance.CreateTable(false);
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact(DisplayName = "Generated Merge Statement Should Be Correct")]
+        public void GeneratedMergeStatementShouldBeCorrect()
+        {
+            // arrange
+            var instance = new TSqlGenerator<StandardModel>();
+            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target
+USING #StandardModels AS source
+ON target.PK = source.PK
+WHEN MATCHED THEN
+UPDATE SET target.Name = source.Name
+WHEN NOT MATCHED BY target THEN
+INSERT (Name)
+VALUES (source.Name)
+;"; // final new line
+
+            // act
+            var actual = instance.Merge(new UpsertOptions<StandardModel>()
+                .SetTargetTable("StandardModels")
+                .AddMatchColumn(o => o.PK)
+                .AddMapColumn(p => p.Name)
+            );
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact(DisplayName = "Generated Merge Should Show Mapped Columns")]
+        public void GeneratedMergeShouldShowMappedColumns()
+        {
+            // arrange
+            var instance = new TSqlGenerator<StandardModel>();
+            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target
+USING #StandardModels AS source
+ON target.PK = source.PK
+WHEN MATCHED THEN
+UPDATE SET target.PK = source.PK, target.FK = source.FK, target.Name = source.Name
+WHEN NOT MATCHED BY target THEN
+INSERT (PK, FK, Name)
+VALUES (source.PK, source.FK, source.Name)
+;"; // final new line
+
+            // act
+            var actual = instance.Merge(new UpsertOptions<StandardModel>()
+                .SetTargetTable("StandardModels")
+                .AddMatchColumn(o => o.PK)
+                .AddMapColumn(p => p.PK)
+                .AddMapColumn(p => p.FK)
+                .AddMapColumn(p => p.Name)
+            );
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact(DisplayName = "Multiple Match Columns Should Match")]
+        public void MultipleMatchColumnsShouldMatch()
+        {
+            // arrange
+            var instance = new TSqlGenerator<StandardModel>();
+            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target
+USING #StandardModels AS source
+ON target.PK = source.PK AND target.FK = source.FK
+WHEN MATCHED THEN
+UPDATE SET target.PK = source.PK, target.FK = source.FK, target.Name = source.Name
+WHEN NOT MATCHED BY target THEN
+INSERT (PK, FK, Name)
+VALUES (source.PK, source.FK, source.Name)
+;"; // final new line
+
+            // act
+            var actual = instance.Merge(new UpsertOptions<StandardModel>()
+                .SetTargetTable("StandardModels")
+                .AddMatchColumn(o => o.PK)
+                .AddMatchColumn(o => o.FK)
+                .AddMapColumn(p => p.PK)
+                .AddMapColumn(p => p.FK)
+                .AddMapColumn(p => p.Name)
+            );
 
             // assert
             Assert.Equal(expected, actual);

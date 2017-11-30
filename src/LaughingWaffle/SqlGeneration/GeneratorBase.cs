@@ -12,7 +12,7 @@ namespace LaughingWaffle.SqlGeneration
     /// Base class for Sql Generators to inherit from (at the moment this is SQL Server only, but who knows where it might go)
     /// </summary>
     /// <typeparam name="TType">The type to reflect upon and generate corresponding SQL statements.</typeparam>>
-    public abstract class GeneratorBase<TType> : ISqlGenerator
+    public abstract class GeneratorBase<TType> : ISqlGenerator<TType>
     {
         private readonly Type tType;
         private readonly TypeInfo tTypeInfo;
@@ -21,37 +21,16 @@ namespace LaughingWaffle.SqlGeneration
         /// <summary>
         /// Expose the table name of the underlying [TableAttribute] on the class.
         /// </summary>
-        public string TableName
+        public string TableName(bool tempTable)
         {
-            get
+            if (string.IsNullOrEmpty(_tableName))
             {
-                if (string.IsNullOrEmpty(_tableName))
-                {
-                    var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
-                    _tableName = tableAttribute != null ? tableAttribute.Name : tTypeInfo.Name;
-                }
-                return _tableName;
+                var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
+                _tableName = (tempTable ? "#" : "") + (tableAttribute != null ? tableAttribute.Name : tTypeInfo.Name);
             }
+            return _tableName;
         }
         private string _tableName;
-
-        /// <summary>
-        /// Expose the table schema of the underlying [TableAttribute] on the class.
-        /// </summary>
-        public string TableSchema
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_tableSchema))
-                {
-                    var tableAttribute = tTypeInfo.GetCustomAttribute<TableAttribute>();
-                    _tableSchema = tableAttribute != null ? tableAttribute.Schema : string.Empty;
-                }
-                return _tableSchema;
-
-            }
-        }
-        private string _tableSchema;
 
         /// <summary>
         /// Base Class Constructor; load up the requisite paramaters. 
@@ -92,7 +71,7 @@ namespace LaughingWaffle.SqlGeneration
 
             var allProperties = _propertyFilter.GetProperties(tType);
 
-            builder.AppendLine($@"CREATE TABLE {(tempTable ? "#" : "")}{TableName} (");
+            builder.AppendLine($@"CREATE TABLE {TableName(tempTable)} (");
 
             foreach (var prop in allProperties)
             {
@@ -117,7 +96,7 @@ namespace LaughingWaffle.SqlGeneration
         public IEnumerable<string> GetProperties() => _propertyFilter.GetProperties(tType).Select(p => p.Name);
 
         /// <summary>
-        /// 
+        /// A dictionary to convert C#/.NET and Sql Types.
         /// </summary>
         /// <returns>A mapping dictionary between C# types and their Sql Counterparts</returns>
         protected abstract Dictionary<string, string> CsharpTypeToSqlType { get; }
@@ -129,6 +108,58 @@ namespace LaughingWaffle.SqlGeneration
                 return Nullable.GetUnderlyingType(type);
             else
                 return type;
+        }
+
+        public string Merge(IUpsertOptions<TType> options)
+        {
+            // reference: https://stackoverflow.com/a/14806962/86860
+
+            var builder = new StringBuilder();
+
+            builder.Append($"MERGE INTO {options.TargetTableSchema}.{options.TargetTableName}");
+            builder.AppendLine(" WITH (HOLDLOCK) AS target");
+
+            builder.AppendLine($"USING {TableName(true)} AS source");
+            builder.Append("ON ");
+            foreach (var match in options.MatchColumns)
+            {
+                builder.Append($"target.{match} = source.{match}");
+                if (match == options.MatchColumns.Last())
+                {
+                    // on the last one, end the line
+                    builder.AppendLine("");
+                }
+                else
+                {
+                    // AND for the next parm
+                    builder.Append(" AND ");
+                }
+            }
+            builder.AppendLine("WHEN MATCHED THEN");
+            // updates
+            builder.Append("UPDATE SET ");
+            foreach (var map in options.MapColumns)
+            {
+                builder.Append($"target.{map} = source.{map}");
+                if (map == options.MapColumns.Last())
+                {
+                    // on the last one, end the line
+                    builder.AppendLine("");
+                }
+                else
+                {
+                    // AND for the next parm
+                    builder.Append(", ");
+                }
+            }
+            builder.AppendLine("WHEN NOT MATCHED BY target THEN");
+            //insert
+            builder.AppendLine($"INSERT ({string.Join(", ", options.MapColumns)})");
+            builder.AppendLine($"VALUES (source.{string.Join(", source.", options.MapColumns)})");
+
+            //https://docs.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql Remarks
+            builder.Append(";"); // final semicolon for MERGE statament
+            return builder.ToString();
         }
     }
 }
