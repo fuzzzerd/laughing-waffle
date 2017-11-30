@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WaffleTests.TestModels
 {
-    [Table("TestNullAndNotNullInts")]
-    public class TestNullAndNotNullInt
+    [Table("ModelWithAGetter", Schema = "dbo")]
+    public class ModelWithAGetter
     {
         public int PK { get; set; }
         public int? FK { get; set; }
+        public String Name { get; }
     }
 }
