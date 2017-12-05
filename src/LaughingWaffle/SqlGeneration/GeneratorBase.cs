@@ -79,7 +79,14 @@ namespace LaughingWaffle.SqlGeneration
                 var csharpType = GetCoreType(prop.PropertyType).Name;
                 var tsqlType = CsharpTypeToSqlType[csharpType];
                 var nulle = Nullable.GetUnderlyingType(prop.PropertyType) != null ? "NULL" : "NOT NULL";
-                builder.AppendLine($"[{name}] [{tsqlType}] {nulle}");
+                if (prop == allProperties.Last())
+                {
+                    builder.AppendLine($"[{name}] [{tsqlType}] {nulle}");
+                }
+                else
+                {
+                    builder.AppendLine($"[{name}] [{tsqlType}] {nulle},");
+                }
             }
 
             builder.Append(")");

@@ -40,8 +40,8 @@ namespace LaughingWaffle.Tests
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE StandardModels (
-[PK] [int] NOT NULL
-[FK] [int] NULL
+[PK] [int] NOT NULL,
+[FK] [int] NULL,
 [Name] [nvarchar(max)] NOT NULL
 )";
             // act
@@ -57,8 +57,8 @@ namespace LaughingWaffle.Tests
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE #StandardModels (
-[PK] [int] NOT NULL
-[FK] [int] NULL
+[PK] [int] NOT NULL,
+[FK] [int] NULL,
 [Name] [nvarchar(max)] NOT NULL
 )";
             // act
@@ -74,8 +74,8 @@ namespace LaughingWaffle.Tests
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
             var expected = $@"CREATE TABLE #StandardModels (
-[PK] [int] NOT NULL
-[FK] [int] NULL
+[PK] [int] NOT NULL,
+[FK] [int] NULL,
 [Name] [nvarchar(max)] NOT NULL
 )";
             // act
@@ -91,7 +91,7 @@ namespace LaughingWaffle.Tests
             // arrange
             var instance = new TSqlGenerator<TestNullAndNotNullInt>();
             var expected = $@"CREATE TABLE TestNullAndNotNullInts (
-[PK] [int] NOT NULL
+[PK] [int] NOT NULL,
 [FK] [int] NULL
 )";
             // act
@@ -107,24 +107,24 @@ namespace LaughingWaffle.Tests
             // arrange
             var instance = new TSqlGenerator<EachTypeWeHave>();
             var expected = $@"CREATE TABLE EachTypeWeHave (
-[PK] [int] NOT NULL
-[FK] [int] NULL
-[theGuid] [uniqueidentifier] NOT NULL
-[nullGuid] [uniqueidentifier] NULL
-[Name] [nvarchar(max)] NOT NULL
-[Dt] [datetime] NOT NULL
-[NullableDt] [datetime] NULL
-[d] [real] NOT NULL
-[dNull] [real] NULL
-[longNumber] [bigint] NOT NULL
-[i64Number] [bigint] NOT NULL
-[er] [float] NOT NULL
-[dec] [decimal] NOT NULL
-[theBIT] [bit] NOT NULL
-[theBOOLEAN] [bit] NOT NULL
-[chewer] [tinyint] NOT NULL
-[bigChewer] [tinyint] NOT NULL
-[binary] [binary] NOT NULL
+[PK] [int] NOT NULL,
+[FK] [int] NULL,
+[theGuid] [uniqueidentifier] NOT NULL,
+[nullGuid] [uniqueidentifier] NULL,
+[Name] [nvarchar(max)] NOT NULL,
+[Dt] [datetime] NOT NULL,
+[NullableDt] [datetime] NULL,
+[d] [real] NOT NULL,
+[dNull] [real] NULL,
+[longNumber] [bigint] NOT NULL,
+[i64Number] [bigint] NOT NULL,
+[er] [float] NOT NULL,
+[dec] [decimal] NOT NULL,
+[theBIT] [bit] NOT NULL,
+[theBOOLEAN] [bit] NOT NULL,
+[chewer] [tinyint] NOT NULL,
+[bigChewer] [tinyint] NOT NULL,
+[binary] [binary] NOT NULL,
 [offset] [datetimeoffset] NOT NULL
 )";
             // act
