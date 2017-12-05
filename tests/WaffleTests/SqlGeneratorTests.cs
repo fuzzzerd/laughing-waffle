@@ -42,7 +42,7 @@ namespace LaughingWaffle.Tests
             var expected = $@"CREATE TABLE StandardModels (
 [PK] [int] NOT NULL,
 [FK] [int] NULL,
-[Name] [nvarchar(max)] NOT NULL
+[Name] [nvarchar](max) NOT NULL
 )";
             // act
             var actual = instance.CreateTable(false);
@@ -59,7 +59,7 @@ namespace LaughingWaffle.Tests
             var expected = $@"CREATE TABLE #StandardModels (
 [PK] [int] NOT NULL,
 [FK] [int] NULL,
-[Name] [nvarchar(max)] NOT NULL
+[Name] [nvarchar](max) NOT NULL
 )";
             // act
             var actual = instance.CreateTable();
@@ -76,7 +76,7 @@ namespace LaughingWaffle.Tests
             var expected = $@"CREATE TABLE #StandardModels (
 [PK] [int] NOT NULL,
 [FK] [int] NULL,
-[Name] [nvarchar(max)] NOT NULL
+[Name] [nvarchar](max) NOT NULL
 )";
             // act
             var actual = instance.CreateTable(true);
@@ -111,7 +111,7 @@ namespace LaughingWaffle.Tests
 [FK] [int] NULL,
 [theGuid] [uniqueidentifier] NOT NULL,
 [nullGuid] [uniqueidentifier] NULL,
-[Name] [nvarchar(max)] NOT NULL,
+[Name] [nvarchar](max) NOT NULL,
 [Dt] [datetime] NOT NULL,
 [NullableDt] [datetime] NULL,
 [d] [real] NOT NULL,

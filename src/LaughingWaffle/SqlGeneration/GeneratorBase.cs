@@ -81,11 +81,11 @@ namespace LaughingWaffle.SqlGeneration
                 var nulle = Nullable.GetUnderlyingType(prop.PropertyType) != null ? "NULL" : "NOT NULL";
                 if (prop == allProperties.Last())
                 {
-                    builder.AppendLine($"[{name}] [{tsqlType}] {nulle}");
+                    builder.AppendLine($"[{name}] [{tsqlType}]{(tsqlType == "nvarchar" ? "(max)" : "")} {nulle}");
                 }
                 else
                 {
-                    builder.AppendLine($"[{name}] [{tsqlType}] {nulle},");
+                    builder.AppendLine($"[{name}] [{tsqlType}]{(tsqlType == "nvarchar" ? "(max)" : "")} {nulle},");
                 }
             }
 

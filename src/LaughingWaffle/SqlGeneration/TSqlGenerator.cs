@@ -15,7 +15,7 @@ namespace LaughingWaffle.SqlGeneration
             { "Byte", "tinyint" },
             { "Byte[]", "binary" },
             { "Int64", "bigint" },
-            { "String", "nvarchar(max)" },
+            { "String", "nvarchar" },
             { "Boolean", "bit" },
             { "DateTime", "datetime" },
             { "DateTimeOffset", "datetimeoffset" },
