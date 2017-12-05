@@ -69,5 +69,20 @@ namespace LaughingWaffle.Tests
             // assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact(DisplayName = "Map All Columns Adds All Value And String And Byte[]")]
+        public void ShouldGetThreeNamedColumns()
+        {
+            // arrange
+            var instance = new UpsertOptions<StandardModel>();
+            var expected = "PK,FK,Name";
+
+            // act
+            instance.MapAllColumns();
+            var actual = string.Join(",", instance._mapColumns);
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
     }
 }

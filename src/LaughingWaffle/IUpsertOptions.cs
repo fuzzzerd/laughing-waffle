@@ -34,6 +34,11 @@ namespace LaughingWaffle
         /// <returns>Instance of the parent class for method chaining.</returns>
         UpsertOptions<TType> AddMapColumn(string name);
 
+        /// <summary>
+        /// Add all properties to the map list.
+        /// </summary>
+        /// <returns>Instance of the parent class for method chaining.</returns>
+        UpsertOptions<TType> MapAllColumns();
 
         /// <summary>
         /// Add a column to the MATCH list. The columns used to determine equality of rows (for update vs. insert: Upsert).

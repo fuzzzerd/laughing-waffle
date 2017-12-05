@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
@@ -9,11 +10,24 @@ namespace LaughingWaffle
 {
     public class UpsertOptions<TType> : IUpsertOptions<TType>
     {
+        private readonly PropertyLoaders.IPropertyLoader _loader;
+
         internal List<string> _mapColumns;
         internal List<string> _matchColumns;
 
         public IEnumerable<string> MatchColumns => _matchColumns;
         public IEnumerable<string> MapColumns => _mapColumns;
+
+
+        public UpsertOptions() : this(new PropertyLoaders.PropertyLoader()) { }
+
+        public UpsertOptions(PropertyLoaders.IPropertyLoader loader)
+        {
+            _loader = loader;
+
+            _mapColumns = new List<string>();
+            _matchColumns = new List<string>();
+        }
 
         /// <summary>
         /// Set the name of the target table for this upsert. This method defaults the schema to "dbo".
@@ -41,12 +55,6 @@ namespace LaughingWaffle
         public string TargetTableName { get; private set; }
 
         public string TargetTableSchema { get; private set; }
-
-        public UpsertOptions()
-        {
-            _mapColumns = new List<string>();
-            _matchColumns = new List<string>();
-        }
 
         /// <summary>
         /// Adds a column to the list of columns to match on in the merge statement. Typically the primary key, but an arbitrary number are supported for composite relationships.
@@ -89,6 +97,21 @@ namespace LaughingWaffle
         public UpsertOptions<TType> AddMapColumn(string name)
         {
             _mapColumns.Add(name);
+            return this;
+        }
+
+        /// <summary>
+        /// Add all properties to the map list.
+        /// </summary>
+        /// <returns>Instance of the parent class for method chaining.</returns>
+        public UpsertOptions<TType> MapAllColumns()
+        {
+            foreach (var property in _loader
+                .GetProperties(typeof(TType))
+                .Select(prop => prop.Name))
+            {
+                AddMapColumn(property);
+            }
             return this;
         }
 
