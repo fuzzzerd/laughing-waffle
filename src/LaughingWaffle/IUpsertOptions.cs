@@ -27,13 +27,27 @@ namespace LaughingWaffle
         /// <param name="func">The name of the column.</param>
         /// <returns>Instance of the parent class for method chaining.</returns>
         UpsertOptions<TType> AddMapColumn(Expression<Func<TType, object>> func);
-        
+        /// <summary>
+        /// Add a column to the MAP list. The columns that are updated or inserted into.
+        /// </summary>
+        /// <param name="name">The name of the column.</param>
+        /// <returns>Instance of the parent class for method chaining.</returns>
+        UpsertOptions<TType> AddMapColumn(string name);
+
+
         /// <summary>
         /// Add a column to the MATCH list. The columns used to determine equality of rows (for update vs. insert: Upsert).
         /// </summary>
         /// <param name="func">The name of the column.</param>
         /// <returns>Instance of the parent class for method chaining.</returns>
         UpsertOptions<TType> AddMatchColumn(Expression<Func<TType, object>> func);
+        /// <summary>
+        /// Add a column to the MATCH list. The columns used to determine equality of rows (for update vs. insert: Upsert).
+        /// </summary>
+        /// <param name="name">The name of the column.</param>
+        /// <returns>Instance of the parent class for method chaining.</returns>
+        UpsertOptions<TType> AddMatchColumn(string name);
+
 
         /// <summary>
         /// The columns to match on.
