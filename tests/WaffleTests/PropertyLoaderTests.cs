@@ -58,5 +58,19 @@ namespace LaughingWaffle.Tests
             // assert that we have a derived class from IEnumerable<PropertyInfo>
             Assert.IsAssignableFrom<IEnumerable<PropertyInfo>>(actual);
         }
+
+        [Fact(DisplayName = "Standard Model Should Show Three Properties")]
+        public void StandardModelHasThreeValueAndStrings()
+        {
+            // arrange
+            IPropertyLoader instance = new PropertyLoader();
+            var expected = 3;
+
+            // act
+            var actual = instance.GetProperties(typeof(StandardModel));
+
+            // assert that we have a derived class from IEnumerable<PropertyInfo>
+            Assert.Equal(expected, actual.Count());
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace WaffleTests.TestModels
         public int PK { get; set; }
         public int? FK { get; set; }
         public String Name { get; set; }
+
+        public System.Text.StringBuilder StringBuilder { get; set; }
     }
 }
