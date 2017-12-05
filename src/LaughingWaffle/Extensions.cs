@@ -30,17 +30,18 @@ namespace LaughingWaffle
             using (var copy = new SqlBulkCopy((SqlConnection)conn))
             using(var reader = FastMember.ObjectReader.Create(entities, sqlGenerator.GetProperties().ToArray()))
             {
-                // set destination table
-                copy.DestinationTableName = options.TargetTableName;
                 // setup mapping
                 foreach (var prop in sqlGenerator.GetProperties())
                 {
                     // force one<=>one mapping
                     copy.ColumnMappings.Add(prop, prop);
                 }
+                // set destination table
+                copy.DestinationTableName = options.TargetTableName;
                 // write data from reader to server
                 copy.WriteToServer(reader);
                 // run the bulk insert to temp table
+                copy.Close();
             }
             // <== end bulk insert to temp table
 
