@@ -10,7 +10,7 @@ namespace LaughingWaffle.SqlGeneration
         /// </summary>
         protected override Dictionary<string, string> CsharpTypeToSqlType => new Dictionary<string, string>
         {
-            { "Guid", "uniqueidentifer" },
+            { "Guid", "uniqueidentifier" },
             { "Int32", "int" },
             { "Byte", "tinyint" },
             { "Byte[]", "binary" },

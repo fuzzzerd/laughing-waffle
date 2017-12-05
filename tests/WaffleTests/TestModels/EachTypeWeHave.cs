@@ -8,7 +8,8 @@ namespace WaffleTests.TestModels
     {
         public int PK { get; set; }
         public int? FK { get; set; }
-
+        public Guid theGuid { get; set; }
+        public Guid? nullGuid { get; set; }
         public string Name { get; set; }
         public DateTime Dt { get; set; }
         public DateTime? NullableDt { get; set; }

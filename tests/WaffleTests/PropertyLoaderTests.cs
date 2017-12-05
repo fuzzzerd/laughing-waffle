@@ -72,5 +72,19 @@ namespace LaughingWaffle.Tests
             // assert that we have a derived class from IEnumerable<PropertyInfo>
             Assert.Equal(expected, actual.Count());
         }
+
+        [Fact(DisplayName = "Custom Model Should Show All Properties")]
+        public void CustommodelShouldShowAllProperties()
+        {
+            // arrange
+            IPropertyLoader instance = new PropertyLoader();
+            var expected = 8;
+
+            // act
+            var actual = instance.GetProperties(typeof(TestModel1));
+
+            // assert that we have a derived class from IEnumerable<PropertyInfo>
+            Assert.Equal(expected, actual.Count());
+        }
     }
 }

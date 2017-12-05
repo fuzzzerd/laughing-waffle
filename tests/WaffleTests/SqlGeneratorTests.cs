@@ -85,7 +85,7 @@ namespace LaughingWaffle.Tests
             Assert.Equal(expected, actual);
         }
 
-        [Fact(DisplayName ="Test Null and Not Null Ints")]
+        [Fact(DisplayName = "Test Null and Not Null Ints")]
         public void TestNullAndNotNullInts()
         {
             // arrange
@@ -109,6 +109,8 @@ namespace LaughingWaffle.Tests
             var expected = $@"CREATE TABLE EachTypeWeHave (
 [PK] [int] NOT NULL
 [FK] [int] NULL
+[theGuid] [uniqueidentifier] NOT NULL
+[nullGuid] [uniqueidentifier] NULL
 [Name] [nvarchar(max)] NOT NULL
 [Dt] [datetime] NOT NULL
 [NullableDt] [datetime] NULL
@@ -181,6 +183,32 @@ VALUES (source.PK, source.FK, source.Name)
                 .AddMapColumn(p => p.FK)
                 .AddMapColumn(p => p.Name)
             );
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact(DisplayName = "Generated Merge Should Show All Columns")]
+        public void MergeWithAllMapped()
+        {
+            // arrange
+            var instance = new TSqlGenerator<TestModel1>();
+            var expected = $@"MERGE INTO dbo.TestModel1 WITH (HOLDLOCK) AS target
+USING #TestModel1 AS source
+ON target.TmId = source.TmId
+WHEN MATCHED THEN
+UPDATE SET target.TmId = source.TmId, target.TfkId = source.TfkId, target.ModifiedDate = source.ModifiedDate, target.PSI = source.PSI, target.ModifiedBy = source.ModifiedBy, target.CreatedBy = source.CreatedBy, target.Current = source.Current, target.CreatedDate = source.CreatedDate
+WHEN NOT MATCHED BY target THEN
+INSERT (TmId, TfkId, ModifiedDate, PSI, ModifiedBy, CreatedBy, Current, CreatedDate)
+VALUES (source.TmId, source.TfkId, source.ModifiedDate, source.PSI, source.ModifiedBy, source.CreatedBy, source.Current, source.CreatedDate)
+;"; // final new line
+
+            // act
+            var actual = instance.Merge(new UpsertOptions<TestModel1>()
+                .SetTargetTable("TestModel1")
+                .AddMatchColumn(o => o.TmId)
+                .MapAllColumns()
+                );
 
             // assert
             Assert.Equal(expected, actual);
