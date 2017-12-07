@@ -21,10 +21,12 @@ namespace LaughingWaffle
             var mergeScript = sqlGenerator.Merge(options);
 
             // execute
-            var createTableCmd = conn.CreateCommand();
-            createTableCmd.CommandType = CommandType.Text;
-            createTableCmd.CommandText = createScript;
-            createTableCmd.ExecuteNonQuery();
+            using (var createTableCmd = conn.CreateCommand())
+            {
+                createTableCmd.CommandType = CommandType.Text;
+                createTableCmd.CommandText = createScript;
+                createTableCmd.ExecuteNonQuery();
+            }
 
             // ==> bulk insert to temp table
             using (var copy = new SqlBulkCopy((SqlConnection)conn))
@@ -36,8 +38,8 @@ namespace LaughingWaffle
                     // force one<=>one mapping
                     copy.ColumnMappings.Add(prop, prop);
                 }
-                // set destination table
-                copy.DestinationTableName = options.TargetTableName;
+                // set destination table (insert into TEMP table)
+                copy.DestinationTableName = sqlGenerator.TableName(true);
                 // write data from reader to server
                 copy.WriteToServer(reader);
                 // run the bulk insert to temp table
@@ -47,9 +49,10 @@ namespace LaughingWaffle
 
             // ==> merge upsert
             using (var trans = conn.BeginTransaction())
+            using (var mergeTempAndRealCmd = conn.CreateCommand())
             {
                 // ==> merge temp table to target table
-                var mergeTempAndRealCmd = conn.CreateCommand();
+                mergeTempAndRealCmd.Transaction = trans;
                 mergeTempAndRealCmd.CommandType = CommandType.Text;
                 mergeTempAndRealCmd.CommandText = mergeScript;
                 mergeTempAndRealCmd.ExecuteNonQuery();
