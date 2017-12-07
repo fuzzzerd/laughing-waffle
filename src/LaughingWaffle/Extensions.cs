@@ -8,8 +8,19 @@ using System.Linq;
 
 namespace LaughingWaffle
 {
+    /// <summary>
+    /// Extension methods that hang off the Connection class.
+    /// </summary>
     public static class Extensions
     {
+        /// <summary>
+        /// Upsert (insert if not matched, update if matched) a generic collection of objects.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of entities to be updated.</typeparam>
+        /// <param name="conn">The <see cref="IDbConnection"/> instance we're hanging off.</param>
+        /// <param name="entities">An IEnumerable of objects to be upserted into the connection.</param>
+        /// <param name="options">Bulk Upsert Options that describe how this upsert should work.</param>
+        /// <returns></returns>
         public static bool Upsert<TEntity>(
             this IDbConnection conn,
             IEnumerable<TEntity> entities,
