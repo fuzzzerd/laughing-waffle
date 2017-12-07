@@ -19,6 +19,7 @@ namespace LaughingWaffle
             var sqlGenerator = new TSqlGenerator<TEntity>();
             var createScript = sqlGenerator.CreateTable();
             var mergeScript = sqlGenerator.Merge(options);
+            var cleanUpScript = $"DROP TABLE {sqlGenerator.TableName(true)};";
 
             // execute
             using (var createTableCmd = conn.CreateCommand())
@@ -62,9 +63,13 @@ namespace LaughingWaffle
             // <== end merge upsert
 
             // cleanup
-
+            using (var dropTableCmd = conn.CreateCommand())
+            {
+                dropTableCmd.CommandText = cleanUpScript;
+                dropTableCmd.ExecuteNonQuery();
+            }
             // finalize
-            return false; // maybe update this to indicate kinds of failure instead of simple true/false.
+            return true; // maybe update this to indicate kinds of failure instead of simple true/false.
         }
     }
 }
