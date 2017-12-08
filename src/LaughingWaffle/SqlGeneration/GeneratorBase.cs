@@ -117,56 +117,11 @@ namespace LaughingWaffle.SqlGeneration
                 return type;
         }
 
-        public string Merge(IUpsertOptions<TType> options)
-        {
-            // reference: https://stackoverflow.com/a/14806962/86860
-
-            var builder = new StringBuilder();
-
-            builder.Append($"MERGE INTO {options.TargetTableSchema}.{options.TargetTableName}");
-            builder.AppendLine(" WITH (HOLDLOCK) AS target");
-
-            builder.AppendLine($"USING {TableName(true)} AS source");
-            builder.Append("ON ");
-            foreach (var match in options.MatchColumns)
-            {
-                builder.Append($"target.{match} = source.{match}");
-                if (match == options.MatchColumns.Last())
-                {
-                    // on the last one, end the line
-                    builder.AppendLine("");
-                }
-                else
-                {
-                    // AND for the next parm
-                    builder.Append(" AND ");
-                }
-            }
-            builder.AppendLine("WHEN MATCHED THEN");
-            // updates
-            builder.Append("UPDATE SET ");
-            foreach (var map in options.MapColumns)
-            {
-                builder.Append($"target.{map} = source.{map}");
-                if (map == options.MapColumns.Last())
-                {
-                    // on the last one, end the line
-                    builder.AppendLine("");
-                }
-                else
-                {
-                    // AND for the next parm
-                    builder.Append(", ");
-                }
-            }
-            builder.AppendLine("WHEN NOT MATCHED BY target THEN");
-            //insert
-            builder.AppendLine($"INSERT ({string.Join(", ", options.MapColumns)})");
-            builder.AppendLine($"VALUES (source.{string.Join(", source.", options.MapColumns)})");
-
-            //https://docs.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql Remarks
-            builder.Append(";"); // final semicolon for MERGE statament
-            return builder.ToString();
-        }
+        /// <summary>
+        /// Performs the generation of the merge statement based on the given options.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public abstract string Merge(IUpsertOptions<TType> options);
     }
 }
