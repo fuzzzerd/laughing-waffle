@@ -13,6 +13,7 @@
     <RepositoryType>GitHub</RepositoryType>
     <Authors>fuzzzerd</Authors>
     <Company />
+    <PackageTags>sql sql-server bulk insert upsert update etl transform load</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
