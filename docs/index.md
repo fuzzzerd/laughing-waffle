@@ -4,9 +4,9 @@ Laughing Waffle is a helper library for doing bulk insert and upate (read upsert
 
 It is targeting .NET Standard v1.3 for wide compatibility across the .NET ecosystem.
 
-| Build Status | MyGet Downloads | NuGet Downloads |
-|---|---|---|
-| [![LaughingWaffle Duild Status](https://www.myget.org/BuildSource/Badge/laughing-waffle?identifier=cfe06860-e514-4595-aeff-6bb1f7a2e974)](https://www.myget.org/feed/Packages/laughing-waffle) | [![MyGet Downloads](https://img.shields.io/myget/laughing-waffle/dt/LaughingWaffle.svg?style=flat-square)](https://www.myget.org/feed/laughing-waffle/package/nuget/LaughingWaffle) | coming soon |
+| Build Status | MyGet Downloads | NuGet Downloads | License |
+|---|---|---|---|
+| [![LaughingWaffle Duild Status](https://www.myget.org/BuildSource/Badge/laughing-waffle?identifier=cfe06860-e514-4595-aeff-6bb1f7a2e974)](https://www.myget.org/feed/Packages/laughing-waffle) | [![MyGet Downloads](https://img.shields.io/myget/laughing-waffle/dt/LaughingWaffle.svg?style=flat-square)](https://www.myget.org/feed/laughing-waffle/package/nuget/LaughingWaffle) | coming soon | [![License MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/blob/master/LICENSE) |
 
 ## What is Laughing Waffle
 
