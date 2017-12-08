@@ -30,10 +30,10 @@ _connection.Upsert(toUpsert, upsertOptions);
 ```
 
 ### Repository Statistics
-[![GitHub commit activity the past week, 4 weeks, year](https://img.shields.io/github/commit-activity/y/fuzzzerd/laughing-waffle.svg?style=flat-square)]()
+[![GitHub commit activity the past week, 4 weeks, year](https://img.shields.io/github/commit-activity/y/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/commits/master)
 
-[![GitHub issues](https://img.shields.io/github/issues/fuzzzerd/laughing-waffle.svg?style=flat-square)]()
+[![GitHub issues](https://img.shields.io/github/issues/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/issues)
 
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/fuzzzerd/laughing-waffle.svg?style=flat-square)]()
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/commits/master)
 
-[![GitHub language count](https://img.shields.io/github/languages/count/fuzzzerd/laughing-waffle.svg?style=flat-square)]()
+[![GitHub language count](https://img.shields.io/github/languages/count/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/commits/master)
