@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://fuzzzerd.github.io/laughing-waffle/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/fuzzzerd/laughing-waffle</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Authors>fuzzzerd</Authors>
+    <Authors>Nate Bross</Authors>
     <Company />
     <PackageTags>sql sql-server bulk insert upsert update etl transform load</PackageTags>
   </PropertyGroup>
