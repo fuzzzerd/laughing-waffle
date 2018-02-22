@@ -1,6 +1,6 @@
 # Laughing Waffle
 
-Laughing Waffle is a helper library for doing bulk insert and upate (read upsert) work with SQL Server. Specifically providing help and code generation around the [MERGE Statement](https://docs.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql).
+Laughing Waffle is a helper library for doing bulk insert and upate (read upsert) work with SQL Server. Specifically providing help and code generation around the [MERGE Statement](https://docs.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql). There wasn't a good open source or free packages that do this kind of work, so this project aims to fill that gap.
 
 It is targeting .NET Standard v1.3 for wide compatibility across the .NET ecosystem.
 
@@ -10,7 +10,7 @@ It is targeting .NET Standard v1.3 for wide compatibility across the .NET ecosys
 
 ## What is Laughing Waffle
 
-This library is intended to make Extract, Transform, and Load jobs easier. Other tools make both extracting the data easy as well as transforming it from one format to another, but there was no package for helping insert/update on the target side.
+This library is intended to make Extract, Transform, and Load (ETL) jobs easier. Other tools make both extracting the data easy as well as transforming it from one format to another, but there was no package for helping insert/update on the target side.
 
 ## Basic Usage
 
@@ -20,12 +20,12 @@ var toUpsert = new List<YourModel>();
 
 // upsert options
 var upsertOptions = new UpsertOptions<YourModel>()
-    .AddMatchColumn(p => p.PrimaryKey)
-    .AddMapColumn(p => p.Column1)
+    .AddMatchColumn(p => p.PrimaryKey) // field(s) to match rows on
+    .AddMapColumn(p => p.Column1) // columns to update
     .AddMapColumn(p => p.Column2)
-    .SetTargetTable("YourModelTable");
+    .SetTargetTable("YourModelTable"); // target/destination table
 
-// use of extension methods on connections
+// dapper style use of extension methods on connections
 _connection.Upsert(toUpsert, upsertOptions);
 ```
 
