@@ -9,6 +9,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://github.com/fuzzzerd/laughing-waffle/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://fuzzzerd.github.io/laughing-waffle/</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/fuzzzerd/laughing-waffle/blob/master/src/LaughingWaffle/laughing-waffle.ico?raw=true</PackageIconUrl>
     <RepositoryUrl>https://github.com/fuzzzerd/laughing-waffle</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Authors>Nate Bross</Authors>
