@@ -6,7 +6,7 @@ It is targeting .NET Standard v1.3 for wide compatibility across the .NET ecosys
 
 | Build Status | Activity | MyGet Downloads | NuGet Downloads | License |
 |---|---|---|---|---|
-| [![laughing-waffle MyGet Build Status](https://www.myget.org/BuildSource/Badge/laughing-waffle?identifier=90e08a4e-53a1-47a7-a2ae-19d1f4ad1e2d)](https://www.myget.org/feed/Packages/laughing-waffle) | [![GitHub last commit](https://img.shields.io/github/last-commit/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/commits/master) | [![MyGet Downloads](https://img.shields.io/myget/laughing-waffle/dt/LaughingWaffle.svg?style=flat-square)](https://www.myget.org/feed/laughing-waffle/package/nuget/LaughingWaffle) | ![NuGet](https://img.shields.io/nuget/dt/LaughingWaffle.svg) | [![license](https://img.shields.io/github/license/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/blob/master/LICENSE) |
+| [![Build status](https://ci.appveyor.com/api/projects/status/ux3ashr21fl1kr8b/branch/master?svg=true)](https://ci.appveyor.com/project/fuzzzerd/laughing-waffle/branch/master) | [![GitHub last commit](https://img.shields.io/github/last-commit/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/commits/master) | [![MyGet Downloads](https://img.shields.io/myget/laughing-waffle/dt/LaughingWaffle.svg?style=flat-square)](https://www.myget.org/feed/laughing-waffle/package/nuget/LaughingWaffle) | ![NuGet](https://img.shields.io/nuget/dt/LaughingWaffle.svg) | [![license](https://img.shields.io/github/license/fuzzzerd/laughing-waffle.svg?style=flat-square)](https://github.com/fuzzzerd/laughing-waffle/blob/master/LICENSE) |
 
 ## What is Laughing Waffle
 
