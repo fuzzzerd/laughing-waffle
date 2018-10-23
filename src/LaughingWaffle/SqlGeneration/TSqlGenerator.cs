@@ -39,9 +39,9 @@ namespace LaughingWaffle.SqlGeneration
             var builder = new StringBuilder();
 
             builder.Append($"MERGE INTO {options.TargetTableSchema}.{options.TargetTableName}");
-            builder.Append(" WITH (HOLDLOCK) AS target\r\n");
+            builder.AppendLine(" WITH (HOLDLOCK) AS target");
 
-            builder.Append($"USING {TableName(true)} AS source\r\n");
+            builder.AppendLine($"USING {TableName(true)} AS source");
             builder.Append("ON ");
             foreach (var match in options.MatchColumns)
             {
@@ -49,7 +49,7 @@ namespace LaughingWaffle.SqlGeneration
                 if (match == options.MatchColumns.Last())
                 {
                     // on the last one, end the line
-                    builder.Append("\r\n");
+                    builder.AppendLine("");
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace LaughingWaffle.SqlGeneration
                     builder.Append(" AND ");
                 }
             }
-            builder.Append("WHEN MATCHED THEN\r\n");
+            builder.AppendLine("WHEN MATCHED THEN");
             // updates
             builder.Append("UPDATE SET ");
             foreach (var map in options.MapColumns)
@@ -74,10 +74,10 @@ namespace LaughingWaffle.SqlGeneration
                     builder.Append(", ");
                 }
             }
-            builder.Append("WHEN NOT MATCHED BY target THEN\r\n");
+            builder.AppendLine("WHEN NOT MATCHED BY target THEN");
             //insert
-            builder.Append($"INSERT ({string.Join(", ", options.MapColumns)})\r\n");
-            builder.Append($"VALUES (source.{string.Join(", source.", options.MapColumns)})\r\n");
+            builder.AppendLine($"INSERT ({string.Join(", ", options.MapColumns)})");
+            builder.AppendLine($"VALUES (source.{string.Join(", source.", options.MapColumns)})");
 
             //https://docs.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql Remarks
             builder.Append(";"); // final semicolon for MERGE statament
