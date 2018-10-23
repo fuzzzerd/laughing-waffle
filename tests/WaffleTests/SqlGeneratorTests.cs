@@ -1,6 +1,7 @@
 ﻿using LaughingWaffle.SqlGeneration;
 using WaffleTests.TestModels;
 using Xunit;
+using System;
 
 namespace LaughingWaffle.Tests
 {
@@ -56,11 +57,16 @@ namespace LaughingWaffle.Tests
         {
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
-            var expected = $@"CREATE TABLE #StandardModels (
-[PK] [int] NOT NULL,
-[FK] [int] NULL,
-[Name] [nvarchar](max) NOT NULL
-)";
+            var expected = $@"CREATE TABLE #StandardModels ("
+            + Environment.NewLine
+            + "[PK] [int] NOT NULL,"
+            + Environment.NewLine
+            + "[FK] [int] NULL,"
+            + Environment.NewLine
+            + "[Name] [nvarchar](max) NOT NULL"
+            + Environment.NewLine
+            + ")";
+
             // act
             var actual = instance.CreateTable();
 
@@ -73,11 +79,16 @@ namespace LaughingWaffle.Tests
         {
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
-            var expected = $@"CREATE TABLE #StandardModels (
-[PK] [int] NOT NULL,
-[FK] [int] NULL,
-[Name] [nvarchar](max) NOT NULL
-)";
+            var expected = $@"CREATE TABLE #StandardModels ("
+            + Environment.NewLine
+            + "[PK] [int] NOT NULL,"
+            + Environment.NewLine
+            +"[FK] [int] NULL,"
+            + Environment.NewLine
+            +"[Name] [nvarchar](max) NOT NULL"
+            + Environment.NewLine
+            +")";
+
             // act
             var actual = instance.CreateTable(true);
 
@@ -90,10 +101,14 @@ namespace LaughingWaffle.Tests
         {
             // arrange
             var instance = new TSqlGenerator<TestNullAndNotNullInt>();
-            var expected = $@"CREATE TABLE TestNullAndNotNullInts (
-[PK] [int] NOT NULL,
-[FK] [int] NULL
-)";
+            var expected = $@"CREATE TABLE TestNullAndNotNullInts ("
+            + Environment.NewLine
+            + "[PK] [int] NOT NULL,"
+            + Environment.NewLine
+            + "[FK] [int] NULL"
+            + Environment.NewLine
+            + ")";
+            
             // act
             var actual = instance.CreateTable(false);
 
