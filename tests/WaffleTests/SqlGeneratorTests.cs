@@ -40,11 +40,16 @@ namespace LaughingWaffle.Tests
         {
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
-            var expected = $@"CREATE TABLE StandardModels (
-[PK] [int] NOT NULL,
-[FK] [int] NULL,
-[Name] [nvarchar](max) NOT NULL
-)";
+            var expected = $@"CREATE TABLE StandardModels ("
+            + Environment.NewLine
+            +"[PK] [int] NOT NULL,"
+            + Environment.NewLine
+            +"[FK] [int] NULL,"
+            + Environment.NewLine
+            +"[Name] [nvarchar](max) NOT NULL"
+            + Environment.NewLine
+            +")";
+
             // act
             var actual = instance.CreateTable(false);
 
@@ -108,7 +113,7 @@ namespace LaughingWaffle.Tests
             + "[FK] [int] NULL"
             + Environment.NewLine
             + ")";
-            
+
             // act
             var actual = instance.CreateTable(false);
 
@@ -121,27 +126,47 @@ namespace LaughingWaffle.Tests
         {
             // arrange
             var instance = new TSqlGenerator<EachTypeWeHave>();
-            var expected = $@"CREATE TABLE EachTypeWeHave (
-[PK] [int] NOT NULL,
-[FK] [int] NULL,
-[theGuid] [uniqueidentifier] NOT NULL,
-[nullGuid] [uniqueidentifier] NULL,
-[Name] [nvarchar](max) NOT NULL,
-[Dt] [datetime] NOT NULL,
-[NullableDt] [datetime] NULL,
-[d] [real] NOT NULL,
-[dNull] [real] NULL,
-[longNumber] [bigint] NOT NULL,
-[i64Number] [bigint] NOT NULL,
-[er] [float] NOT NULL,
-[dec] [decimal] NOT NULL,
-[theBIT] [bit] NOT NULL,
-[theBOOLEAN] [bit] NOT NULL,
-[chewer] [tinyint] NOT NULL,
-[bigChewer] [tinyint] NOT NULL,
-[binary] [binary] NOT NULL,
-[offset] [datetimeoffset] NOT NULL
-)";
+            var expected = $@"CREATE TABLE EachTypeWeHave ("
+            + Environment.NewLine
+            +"[PK] [int] NOT NULL,"
+            + Environment.NewLine
+            +"[FK] [int] NULL,"
+            + Environment.NewLine
+            +"[theGuid] [uniqueidentifier] NOT NULL,"
+            + Environment.NewLine
+            +"[nullGuid] [uniqueidentifier] NULL,"
+            + Environment.NewLine
+            +"[Name] [nvarchar](max) NOT NULL,"
+            + Environment.NewLine
+            +"[Dt] [datetime] NOT NULL,"
+            + Environment.NewLine
+            +"[NullableDt] [datetime] NULL,"
+            + Environment.NewLine
+            +"[d] [real] NOT NULL,"
+            + Environment.NewLine
+            +"[dNull] [real] NULL,"
+            + Environment.NewLine
+            +"[longNumber] [bigint] NOT NULL,"
+            + Environment.NewLine
+            +"[i64Number] [bigint] NOT NULL,"
+            + Environment.NewLine
+            +"[er] [float] NOT NULL,"
+            + Environment.NewLine
+            +"[dec] [decimal] NOT NULL,"
+            + Environment.NewLine
+            +"[theBIT] [bit] NOT NULL,"
+            + Environment.NewLine
+            +"[theBOOLEAN] [bit] NOT NULL,"
+            + Environment.NewLine
+            +"[chewer] [tinyint] NOT NULL,"
+            + Environment.NewLine
+            +"[bigChewer] [tinyint] NOT NULL,"
+            + Environment.NewLine
+            +"[binary] [binary] NOT NULL,"
+            + Environment.NewLine
+            +"[offset] [datetimeoffset] NOT NULL"
+            + Environment.NewLine
+            +")";
             // act
             var actual = instance.CreateTable(false);
 
@@ -154,15 +179,23 @@ namespace LaughingWaffle.Tests
         {
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
-            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target
-USING #StandardModels AS source
-ON target.PK = source.PK
-WHEN MATCHED THEN
-UPDATE SET target.Name = source.Name
-WHEN NOT MATCHED BY target THEN
-INSERT (Name)
-VALUES (source.Name)
-;"; // final new line
+            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target"
+            + Environment.NewLine
+            +"USING #StandardModels AS source"
+            + Environment.NewLine
+            +"ON target.PK = source.PK"
+            + Environment.NewLine
+            +"WHEN MATCHED THEN"
+            + Environment.NewLine
+            +"UPDATE SET target.Name = source.Name"
+            + Environment.NewLine
+            +"WHEN NOT MATCHED BY target THEN"
+            + Environment.NewLine
+            +"INSERT (Name)"
+            + Environment.NewLine
+            +"VALUES (source.Name)"
+            + Environment.NewLine
+            +";"; // final new line
 
             // act
             var actual = instance.Merge(new UpsertOptions<StandardModel>()
@@ -180,15 +213,23 @@ VALUES (source.Name)
         {
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
-            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target
-USING #StandardModels AS source
-ON target.PK = source.PK
-WHEN MATCHED THEN
-UPDATE SET target.PK = source.PK, target.FK = source.FK, target.Name = source.Name
-WHEN NOT MATCHED BY target THEN
-INSERT (PK, FK, Name)
-VALUES (source.PK, source.FK, source.Name)
-;"; // final new line
+            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target"
+            + Environment.NewLine
+            +"USING #StandardModels AS source"
+            + Environment.NewLine
+            +"ON target.PK = source.PK"
+            + Environment.NewLine
+            +"WHEN MATCHED THEN"
+            + Environment.NewLine
+            +"UPDATE SET target.PK = source.PK, target.FK = source.FK, target.Name = source.Name"
+            + Environment.NewLine
+            +"WHEN NOT MATCHED BY target THEN"
+            + Environment.NewLine
+            +"INSERT (PK, FK, Name)"
+            + Environment.NewLine
+            +"VALUES (source.PK, source.FK, source.Name)"
+            + Environment.NewLine
+            +";"; // final new line
 
             // act
             var actual = instance.Merge(new UpsertOptions<StandardModel>()
@@ -208,15 +249,23 @@ VALUES (source.PK, source.FK, source.Name)
         {
             // arrange
             var instance = new TSqlGenerator<TestModel1>();
-            var expected = $@"MERGE INTO dbo.TestModel1 WITH (HOLDLOCK) AS target
-USING #TestModel1 AS source
-ON target.TmId = source.TmId
-WHEN MATCHED THEN
-UPDATE SET target.TmId = source.TmId, target.TfkId = source.TfkId, target.ModifiedDate = source.ModifiedDate, target.PSI = source.PSI, target.ModifiedBy = source.ModifiedBy, target.CreatedBy = source.CreatedBy, target.Current = source.Current, target.CreatedDate = source.CreatedDate
-WHEN NOT MATCHED BY target THEN
-INSERT (TmId, TfkId, ModifiedDate, PSI, ModifiedBy, CreatedBy, Current, CreatedDate)
-VALUES (source.TmId, source.TfkId, source.ModifiedDate, source.PSI, source.ModifiedBy, source.CreatedBy, source.Current, source.CreatedDate)
-;"; // final new line
+            var expected = $@"MERGE INTO dbo.TestModel1 WITH (HOLDLOCK) AS target"
+            + Environment.NewLine
+            +"USING #TestModel1 AS source"
+            + Environment.NewLine
+            +"ON target.TmId = source.TmId"
+            + Environment.NewLine
+            +"WHEN MATCHED THEN"
+            + Environment.NewLine
+            +"UPDATE SET target.TmId = source.TmId, target.TfkId = source.TfkId, target.ModifiedDate = source.ModifiedDate, target.PSI = source.PSI, target.ModifiedBy = source.ModifiedBy, target.CreatedBy = source.CreatedBy, target.Current = source.Current, target.CreatedDate = source.CreatedDate"
+            + Environment.NewLine
+            +"WHEN NOT MATCHED BY target THEN"
+            + Environment.NewLine
+            +"INSERT (TmId, TfkId, ModifiedDate, PSI, ModifiedBy, CreatedBy, Current, CreatedDate)"
+            + Environment.NewLine
+            +"VALUES (source.TmId, source.TfkId, source.ModifiedDate, source.PSI, source.ModifiedBy, source.CreatedBy, source.Current, source.CreatedDate)"
+            + Environment.NewLine
+            +";"; // final new line
 
             // act
             var actual = instance.Merge(new UpsertOptions<TestModel1>()
@@ -234,15 +283,23 @@ VALUES (source.TmId, source.TfkId, source.ModifiedDate, source.PSI, source.Modif
         {
             // arrange
             var instance = new TSqlGenerator<StandardModel>();
-            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target
-USING #StandardModels AS source
-ON target.PK = source.PK AND target.FK = source.FK
-WHEN MATCHED THEN
-UPDATE SET target.PK = source.PK, target.FK = source.FK, target.Name = source.Name
-WHEN NOT MATCHED BY target THEN
-INSERT (PK, FK, Name)
-VALUES (source.PK, source.FK, source.Name)
-;"; // final new line
+            var expected = $@"MERGE INTO dbo.StandardModels WITH (HOLDLOCK) AS target"
+            + Environment.NewLine
+            +"USING #StandardModels AS source"
+            + Environment.NewLine
+            +"ON target.PK = source.PK AND target.FK = source.FK"
+            + Environment.NewLine
+            +"WHEN MATCHED THEN"
+            + Environment.NewLine
+            +"UPDATE SET target.PK = source.PK, target.FK = source.FK, target.Name = source.Name"
+            + Environment.NewLine
+            +"WHEN NOT MATCHED BY target THEN"
+            + Environment.NewLine
+            +"INSERT (PK, FK, Name)"
+            + Environment.NewLine
+            +"VALUES (source.PK, source.FK, source.Name)"
+            + Environment.NewLine
+            +";"; // final new line
 
             // act
             var actual = instance.Merge(new UpsertOptions<StandardModel>()
